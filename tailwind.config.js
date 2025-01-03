@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
-import colors, { blue, cyan, emerald } from "tailwindcss/colors";
+import colors, { blue, cyan, sky } from "tailwindcss/colors";
 
 export default {
   content: [
@@ -13,7 +13,7 @@ export default {
     extend: {},
     colors: {
       ...colors,
-      primary: emerald,
+      primary: sky,
       secondary: blue,
       tertiary: cyan,
     }
