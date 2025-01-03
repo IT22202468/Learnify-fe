@@ -1,10 +1,22 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { registerUser } from "../services/api";
 
 const SignUp = () => {
+  const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [fullname, setFullname] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await registerUser({ fullname, email, password });
+      alert(response.message);
+    } catch (error) {
+      alert('Error: ' + error.message);
+    }
+  };
 
   return (
     <>
@@ -13,9 +25,9 @@ const SignUp = () => {
           <h2 className="mb-6 text-2xl font-semibold text-center text-primary-600">
             Sign up
           </h2>
-          <form onSubmit="">
+          <form onSubmit={handleSubmit}>
           <div className="mb-4">
-              <label className="block mb-2 text-lg text-start font-semibold text-gray-700">
+              <label className="block mb-2 text-lg font-semibold text-gray-700 text-start">
                 Full name
               </label>
               <input
@@ -27,7 +39,7 @@ const SignUp = () => {
               />
             </div>
             <div className="mb-4">
-              <label className="block mb-2 text-lg text-start font-semibold text-gray-700">
+              <label className="block mb-2 text-lg font-semibold text-gray-700 text-start">
                 Email
               </label>
               <input
@@ -39,7 +51,7 @@ const SignUp = () => {
               />
             </div>
             <div className="mb-4">
-              <label className="block mb-2 text-lg text-start font-semibold text-gray-700">
+              <label className="block mb-2 text-lg font-semibold text-gray-700 text-start">
                 Password
               </label>
               <input
@@ -52,7 +64,7 @@ const SignUp = () => {
             </div>
             <button
               type="submit"
-              className="w-full py-2 text-white transition bg-primary-500 rounded-md hover:bg-primary-600"
+              className="w-full py-2 text-white transition rounded-md bg-primary-500 hover:bg-primary-600"
             >
               SignUp
             </button>
