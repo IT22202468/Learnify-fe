@@ -1,8 +1,16 @@
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 const CourseCard = ({ course }) => {
+    const navigate = useNavigate();
+
+    const handleCardClick = () => {
+        navigate(`/courses/${course.Id}`);
+      };
+
     return (
-        <div className="p-4 bg-white border rounded-lg shadow-lg">
+        <div className="p-4 bg-white border rounded-lg shadow-lg"
+        onClick={handleCardClick}>
             <img
                 src={course.Thumbnail}
                 alt={course.Name}
@@ -11,7 +19,7 @@ const CourseCard = ({ course }) => {
             <div className="mt-4">
                 <h2 className="text-xl font-bold text-black">{course.Name}</h2>
                 <p className="mt-2 text-gray-600">{course.Description}</p>
-                <p className="mt-4 font-semibold text-tertiary-700">
+                <p className="mt-4 font-semibold text-primary-700">
                     ${course.Price} - {course.Duration} hours
                 </p>
             </div>
@@ -25,6 +33,7 @@ CourseCard.propTypes = {
         Description: PropTypes.string.isRequired,
         Price: PropTypes.number.isRequired,
         Duration: PropTypes.number.isRequired,
+        Id: PropTypes.string.isRequired,
     }).isRequired,
 };
 
