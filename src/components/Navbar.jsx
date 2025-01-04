@@ -43,16 +43,16 @@ const Navbar = () => {
         <div className="hidden menu md:block md:w-auto" id="navbar">
           <ul className="flex text-black md:flex-wrap md:space-x-5 md:text-xl">
             <li
-              className="bg-white text-black border border-gray-300 rounded-md px-4 py-2 cursor-pointer hover:bg-gray-100 transition"
+              className="px-4 py-2 text-lg text-black transition bg-white border border-gray-300 rounded-md cursor-pointer hover:bg-gray-100"
               onClick={() => navigate("/login")}
             >
               Login
             </li>
             <li
-              className="bg-primary-600 text-white rounded-md px-4 py-2 cursor-pointer hover:bg-primary-700 transition"
+              className="px-4 py-2 text-lg text-white transition rounded-md cursor-pointer bg-primary-600 hover:bg-primary-700"
               onClick={() => navigate("/signup")}
             >
-              Signup
+              Sign Up
             </li>
           </ul>
         </div>

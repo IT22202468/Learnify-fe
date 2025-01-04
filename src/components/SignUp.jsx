@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../services/api";
 
 const SignUp = () => {
@@ -7,12 +7,15 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await registerUser({ fullname, email, password });
       alert(response.message);
+      navigate("/");
     } catch (error) {
       alert('Error: ' + error.message);
     }

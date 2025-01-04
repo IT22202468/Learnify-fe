@@ -1,12 +1,13 @@
-import React from 'react'
-import Navbar from '../components/Navbar'
+import CourseList from "../components/CourseList";
+import Navbar from "../components/Navbar";
 
 const Home = () => {
   return (
     <>
-    <Navbar />
+      <Navbar />
+      <CourseList />
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
