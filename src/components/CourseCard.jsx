@@ -9,7 +9,7 @@ const CourseCard = ({ course }) => {
       };
 
     return (
-        <div className="p-4 bg-white border rounded-lg shadow-lg"
+        <div className="p-4 bg-white border rounded-lg shadow-lg cursor-pointer"
         onClick={handleCardClick}>
             <img
                 src={course.Thumbnail}

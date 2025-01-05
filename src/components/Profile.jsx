@@ -23,36 +23,40 @@ const Profile = () => {
   return (
     <>
       <Navbar />
-      <div className="container flex flex-col px-4 py-8 mx-10 space-y-8 bg-white rounded-lg shadow-lg">
-        {error && <p className="text-red-500">{error}</p>}
+      <div className="container flex flex-col max-w-4xl px-6 py-10 mx-auto bg-white shadow-2xl rounded-xl">
+        {error && <p className="text-center text-red-500">{error}</p>}
         {profile ? (
           <>
-            <h1 className="mb-8 text-3xl font-bold text-primary-900 text-start">
+            <h1 className="mb-8 text-4xl font-semibold text-center text-primary-900">
               Welcome, {profile[0].Fullname}
             </h1>
-            <h2 className="text-xl font-semibold text-primary-700">Your Courses:</h2>
-            <div className="space-y-4">
+            <h2 className="mx-4 text-2xl font-semibold text-start text-primary-700">Your Courses</h2>
+            <div className="mt-6 space-y-6">
               {profile.map((course, index) => (
-                <div key={index} className="flex flex-row space-x-4">
+                <div
+                  key={index}
+                  className="flex flex-col p-6 rounded-lg shadow-sm md:flex-row md:space-x-6 bg-gray-50"
+                >
                   {course.Thumbnail && (
                     <img
                       src={course.Thumbnail}
                       alt={course.CourseName}
-                      className="object-cover w-32 h-32 mb-4 rounded-lg"
+                      className="object-cover w-full h-32 mb-4 rounded-md md:mb-0"
                     />
                   )}
-                  <div className="flex flex-col space-y-2">
-                    <h3 className="text-lg font-bold text-primary-900">{course.CourseName}</h3>
-                    <p className="text-gray-600">{course.Description}</p>
-                    <p className="text-primary-700">Price: ${course.Price}</p>
-                    <p className="text-primary-700">Duration: {course.Duration} hours</p>
+                  <div className="flex flex-col space-y-3 md:w-2/3 text-start">
+                    <h3 className="text-xl font-semibold text-primary-900">{course.CourseName}</h3>
+                    <p className="text-sm text-gray-600">{course.Description}</p>
+                    <div className="flex flex-col md:flex-row md:space-x-6">
+                      <button className="px-4 py-2 text-lg text-white transition rounded-md cursor-pointer bg-primary-600 hover:bg-primary-700">View Course</button>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
           </>
         ) : (
-          <p>Loading...</p>
+          <p className="text-xl font-semibold text-center text-primary-600">Loading...</p>
         )}
       </div>
     </>

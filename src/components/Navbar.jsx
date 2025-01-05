@@ -1,12 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
-import { Link, useNavigate } from "react-router-dom";
 import MenuOverlay from "./MenuOverlay";
 
 const Navbar = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();  // Get current location (path)
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsAuthenticated(true); // User is logged in
+    } else {
+      setIsAuthenticated(false); // User is not logged in
+    }
+  }, []);
+
+  const isProfilePage = location.pathname === '/profile'; // Check if the current page is the profile page
 
   return (
     <nav className="absolute top-0 left-0 right-0 bg-white bg-opacity-100 border md:fixed">
@@ -42,18 +55,29 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <div className="hidden menu md:block md:w-auto" id="navbar">
           <ul className="flex text-black md:flex-wrap md:space-x-5 md:text-xl">
-            <li
-              className="px-4 py-2 text-lg text-black transition bg-white border border-gray-300 rounded-md cursor-pointer hover:bg-gray-100"
-              onClick={() => navigate("/login")}
-            >
-              Login
-            </li>
-            <li
-              className="px-4 py-2 text-lg text-white transition rounded-md cursor-pointer bg-primary-600 hover:bg-primary-700"
-              onClick={() => navigate("/signup")}
-            >
-              Sign Up
-            </li>
+            {!isAuthenticated ? (
+              <>
+                <li
+                  className="px-4 py-2 text-lg text-black transition bg-white border border-gray-300 rounded-md cursor-pointer hover:bg-gray-100"
+                  onClick={() => navigate("/login")}
+                >
+                  Login
+                </li>
+                <li
+                  className="px-4 py-2 text-lg text-white transition rounded-md cursor-pointer bg-primary-600 hover:bg-primary-700"
+                  onClick={() => navigate("/signup")}
+                >
+                  Sign Up
+                </li>
+              </>
+            ) : !isProfilePage && (  // Conditionally render the Profile button
+              <li
+                className="px-4 py-2 text-lg text-white transition rounded-md cursor-pointer bg-primary-600 hover:bg-primary-700"
+                onClick={() => navigate("/profile")}
+              >
+                Profile
+              </li>
+            )}
           </ul>
         </div>
       </div>

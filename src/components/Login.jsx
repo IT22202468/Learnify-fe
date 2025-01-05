@@ -19,7 +19,7 @@ const Login = () => {
         localStorage.setItem("token", data.token);
   
         alert("Login successful!");
-        navigate("/profile"); 
+        navigate("/"); 
       } else {
         setErrorMessage("Invalid credentials");
       }
