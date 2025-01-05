@@ -7,6 +7,8 @@ import Home from './pages/Home'
 import CourseDetails from './components/CourseDetails'
 import Profile from './components/Profile'
 
+import { AuthorizeUser } from '../middleware/AuthorizeUser'
+
 function App() {
 
   return (
@@ -16,8 +18,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/courses/:id" element={<CourseDetails />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/courses/:id" element={<AuthorizeUser><CourseDetails /></AuthorizeUser>} />
+          <Route path="/profile" element={<AuthorizeUser><Profile /></AuthorizeUser>} />
         </Routes>
         </Router>
     </>

@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { fetchCourses } from "../services/api";
 import Navbar from "./Navbar";
+import { enrollUserInCourse } from "../services/api";
 
 const CourseDetails = () => {
   const { id } = useParams();
   const [course, setCourse] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCourseDetails = async () => {
@@ -22,6 +24,26 @@ const CourseDetails = () => {
 
     fetchCourseDetails();
   }, [id]);
+
+  const handleEnroll = async () => {
+    try {
+      const result = await enrollUserInCourse(course.Id);
+
+      if (result.status === 204) {
+        return alert("You are already enrolled in this course");
+      } else if (result.status === 201) {
+        alert("User enrolled successfully");
+      } 
+      navigate("/profile");
+    } catch (error) {
+      // console.log(error.status);
+      if (error.status === 403) {
+        alert("Please login to enroll in a course");
+        navigate("/login");
+       }
+      console.error("Error enrolling user:", error);
+    }
+  };
 
   if (!course) {
     return <p>Loading...</p>;
@@ -44,11 +66,15 @@ const CourseDetails = () => {
           <p className="text-xl font-semibold text-primary-700">
             ${course.Price} - {course.Duration} hours
           </p>
-          <button className="p-4 text-white rounded-md shadow-sm bg-primary-500 ">Enroll now</button>
+          <button
+            className="p-4 text-white rounded-md shadow-sm bg-primary-500 "
+            onClick={handleEnroll}
+          >
+            Enroll now
+          </button>
         </div>
       </div>
     </>
   );
 };
-
 export default CourseDetails;
