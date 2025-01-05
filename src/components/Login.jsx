@@ -12,19 +12,22 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await loginUser({ email, password });
-
-      if (response.ok) {
-        localStorage.setItem("token", response.token);
+      const data = await loginUser({ email, password });
+  
+      if (data.token) {
+        // Store token in local storage
+        localStorage.setItem("token", data.token);
+  
         alert("Login successful!");
         navigate("/"); 
       } else {
-        setErrorMessage(response.error || "Invalid credentials");
+        setErrorMessage("Invalid credentials");
       }
     } catch (error) {
+      setErrorMessage(error.response?.data?.message || "An error occurred");
       console.error(error);
     }
-  };
+  };  
 
   return (
     <>
