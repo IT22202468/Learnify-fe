@@ -72,12 +72,13 @@ const SignUp = () => {
               SignUp
             </button>
           </form>
-          <div className="mt-4 text-center">
+          <div className="flex flex-col mt-4 text-center ">
+            <span>Already have an account?</span>
             <Link
-              to="/forgot-password"
-              className="text-sm text-primary-500 hover:underline"
+              to="/login"
+              className="text-sm text-primary-500"
             >
-              Forgot Password?
+              Login
             </Link>
           </div>
         </div>

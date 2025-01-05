@@ -8,15 +8,11 @@ const Navbar = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation(); // Get current location (path)
+  const location = useLocation();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
-      setIsAuthenticated(true);
-    } else {
-      setIsAuthenticated(false); 
-    }
+    setIsAuthenticated(!!token); 
   }, []);
 
   const handleLogout = () => {
@@ -25,7 +21,7 @@ const Navbar = () => {
     navigate("/login");
   };
 
-  const isProfilePage = location.pathname === "/profile"; 
+  const isProfilePage = location.pathname === "/profile";
 
   return (
     <nav className="absolute top-0 left-0 right-0 bg-white bg-opacity-100 border md:fixed">
@@ -77,22 +73,24 @@ const Navbar = () => {
                 </li>
               </>
             ) : (
-              !isProfilePage && (
-                <ul>
-                  <li
-                  className="px-4 py-2 text-lg text-white transition rounded-md cursor-pointer bg-primary-600 hover:bg-primary-700"
+              <>
+                <li
+                  className={`px-4 py-2 text-lg transition rounded-md cursor-pointer ${
+                    isProfilePage
+                      ? "bg-primary-700 text-white"
+                      : "bg-primary-600 text-white hover:bg-primary-700"
+                  }`}
                   onClick={() => navigate("/profile")}
                 >
                   Profile
                 </li>
                 <li
-                  className="px-4 py-2 text-lg text-white transition rounded-md cursor-pointer bg-primary-600 hover:bg-primary-700"
+                  className="px-4 py-2 text-lg text-white transition bg-red-600 rounded-md cursor-pointer hover:bg-red-700"
                   onClick={handleLogout}
                 >
                   Logout
                 </li>
-                </ul>
-              )
+              </>
             )}
           </ul>
         </div>
