@@ -36,7 +36,6 @@ const CourseDetails = () => {
       } 
       navigate("/profile");
     } catch (error) {
-      // console.log(error.status);
       if (error.status === 403) {
         alert("Please login to enroll in a course");
         navigate("/login");
