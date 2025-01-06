@@ -1,18 +1,20 @@
-import axios from 'axios';
+import axios from "axios";
 
-const USER_API_URL = 'http://localhost:5000/api/users';
-const COURSE_API_URL = 'http://localhost:5000/api/courses';
-const ENROLLMENT_API_URL = 'http://localhost:5000/api/enrollments';
+// API URLs
+const userAPIurl = import.meta.env.VITE_API_USER_API_URL;
+const courseAPIurl = import.meta.env.VITE_API_COURSE_API_URL;
+const enrollmentAPIurl = import.meta.env.VITE_API_ENROLLMENT_API_URL;
 
+// User-related functions
 
-
+// Register user function
 export const registerUser = async (userData) => {
   try {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
 
-    const response = await axios.post(`${USER_API_URL}/signup`, userData, {
+    const response = await axios.post(`${userAPIurl}/signup`, userData, {
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
     return response.data;
@@ -22,31 +24,19 @@ export const registerUser = async (userData) => {
   }
 };
 
+// Login user function
 export const loginUser = async (userData) => {
-    try {
-      const token = localStorage.getItem('token');
-      
-      const response = await axios.post(`${USER_API_URL}/login`, userData, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-      return response.data;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
-
-
-  // Course-related functions
-export const fetchCourses = async () => {
-  
   try {
-    const response = await axios.get(COURSE_API_URL);
+    const token = localStorage.getItem("token");
+
+    const response = await axios.post(`${userAPIurl}/login`, userData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (error) {
-    console.error('Error fetching courses:', error);
+    console.error(error);
     throw error;
   }
 };
@@ -54,47 +44,62 @@ export const fetchCourses = async () => {
 // Fetch profile function
 export const fetchProfile = async () => {
   try {
-    const token = localStorage.getItem('token');
-    if (!token) throw new Error('No token found');
+    const token = localStorage.getItem("token");
+    if (!token) throw new Error("No token found");
 
-    const response = await axios.get(`${USER_API_URL}/profile`, {
+    const response = await axios.get(`${userAPIurl}/profile`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     return response.data;
   } catch (error) {
-    console.error('Error fetching profile:', error);
+    console.error("Error fetching profile:", error);
+    throw error;
+  }
+};
+
+//Verify user function
+export const verifyUser = async () => {
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) throw new Error("No token found");
+
+    const response = await axios.post(`${userAPIurl}/verify`, { token });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error verifying user:", error);
+    throw error;
+  }
+};
+
+// Course-related functions
+export const fetchCourses = async () => {
+  try {
+    const response = await axios.get(courseAPIurl);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching courses:", error);
     throw error;
   }
 };
 
 // Enrollment function
 export const enrollUserInCourse = async (courseId) => {
-  const token = localStorage.getItem('token');  
-  
-  const response = await axios.post(ENROLLMENT_API_URL, {
+  const token = localStorage.getItem("token");
+
+  const response = await axios.post(
+    enrollmentAPIurl,
+    {
       courseId,
-    }, {
-      "headers": {
-        "Authorization": `Bearer ${token}`,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-    });
+    }
+  );
 
-    return response;
-};
-
-//Verify user function
-export const verifyUser = async () => {
-  try {
-    const token = localStorage.getItem('token');
-    if (!token) throw new Error('No token found');
-
-    const response = await axios.post(`${USER_API_URL}/verify`, { token });
-    
-    return response.data;
-  } catch (error) {
-    console.error('Error verifying user:', error);
-    throw error;
-  }
+  return response;
 };

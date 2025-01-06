@@ -13,13 +13,13 @@ const Login = () => {
     e.preventDefault();
     try {
       const data = await loginUser({ email, password });
-  
+
       if (data.token) {
         // Store token in local storage
         localStorage.setItem("token", data.token);
-  
+
         alert("Login successful!");
-        navigate("/"); 
+        navigate("/");
       } else {
         setErrorMessage("Invalid credentials");
       }
@@ -27,7 +27,7 @@ const Login = () => {
       setErrorMessage(error.response?.data?.message || "An error occurred");
       console.error(error);
     }
-  };  
+  };
 
   return (
     <>
@@ -77,10 +77,7 @@ const Login = () => {
           </form>
           <div className="flex flex-col mt-4 text-center">
             <span>Don&apos;t have an account?</span>
-            <Link
-              to="/signup"
-              className="text-sm text-primary-500"
-            >
+            <Link to="/signup" className="text-sm text-primary-500">
               Sign up
             </Link>
           </div>

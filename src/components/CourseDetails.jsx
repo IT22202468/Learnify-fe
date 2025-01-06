@@ -33,13 +33,13 @@ const CourseDetails = () => {
         return alert("You are already enrolled in this course");
       } else if (result.status === 201) {
         alert("User enrolled successfully");
-      } 
+      }
       navigate("/profile");
     } catch (error) {
       if (error.status === 403) {
         alert("Please login to enroll in a course");
         navigate("/login");
-       }
+      }
       console.error("Error enrolling user:", error);
     }
   };
@@ -62,15 +62,17 @@ const CourseDetails = () => {
         />
         <div className="flex flex-col space-y-4">
           <p className="mb-4 text-lg text-gray-600">{course.Description}</p>
-          <p className="text-xl font-semibold text-primary-700">
-            ${course.Price} - {course.Duration} hours
+          <p className="text-xl">{course.Duration}</p>
+          <p className="text-2xl font-semibold text-primary-700">
+            ${course.Price}
           </p>
           <button
-            className="p-4 text-white rounded-md shadow-sm bg-primary-500 "
+            className="p-4 text-white rounded-md shadow-sm bg-primary-500 hover:bg-primary-600"
             onClick={handleEnroll}
           >
             Enroll now
           </button>
+
         </div>
       </div>
     </>

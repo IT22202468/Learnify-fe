@@ -9,9 +9,9 @@ const MenuOverlay = ({ setNavbarOpen }) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      setIsAuthenticated(true); // User is logged in
+      setIsAuthenticated(true);
     } else {
-      setIsAuthenticated(false); // User is not logged in
+      setIsAuthenticated(false);
     }
   }, []);
 

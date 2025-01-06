@@ -3,7 +3,7 @@ import { fetchProfile } from "../services/api";
 import Navbar from "./Navbar";
 
 const Profile = () => {
-  const [profile, setProfile] = useState([]);
+  const [profile, setProfile] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -23,16 +23,15 @@ const Profile = () => {
   return (
     <>
       <Navbar />
+      <div className="h-24"></div>
       <div className="container flex flex-col max-w-4xl px-6 py-10 mx-auto bg-white shadow-2xl rounded-xl">
         {error && <p className="text-center text-red-500">{error}</p>}
-        {profile.length > 0 ? (
+        {profile ? (
           <>
             <h1 className="mb-8 text-4xl font-semibold text-center text-primary-900">
               Welcome, {profile[0].Fullname}
             </h1>
-            <h2 className="mx-4 text-2xl font-semibold text-start text-primary-700">
-              Your Courses
-            </h2>
+            <h2 className="mx-4 text-2xl font-semibold text-start text-primary-700">Your Courses</h2>
             <div className="mt-6 space-y-6">
               {profile.map((course, index) => (
                 <div
@@ -47,26 +46,18 @@ const Profile = () => {
                     />
                   )}
                   <div className="flex flex-col space-y-3 md:w-2/3 text-start">
-                    <h3 className="text-xl font-semibold text-primary-900">
-                      {course.CourseName}
-                    </h3>
+                    <h3 className="text-xl font-semibold text-primary-900">{course.CourseName}</h3>
                     <p className="text-sm text-gray-600">{course.Description}</p>
-                    {course.Enrolled && (
-                      <div className="flex flex-col md:flex-row md:space-x-6">
-                        <button className="px-4 py-2 text-lg text-white transition rounded-md cursor-pointer bg-primary-600 hover:bg-primary-700">
-                          View Course
-                        </button>
-                      </div>
-                    )}
+                    <div className="flex flex-col md:flex-row md:space-x-6">
+                      <button className="px-4 py-2 text-lg text-white transition rounded-md cursor-pointer bg-primary-600 hover:bg-primary-700">View Course</button>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
           </>
         ) : (
-          <p className="text-xl font-semibold text-center text-primary-600">
-            You don&apos;t have enrolled to any courses :,-)
-          </p>
+          <p className="text-xl font-semibold text-center text-primary-600">Loading...</p>
         )}
       </div>
     </>

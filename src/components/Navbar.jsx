@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
+import { Bars3Icon, XMarkIcon, UserCircleIcon  } from "@heroicons/react/24/solid";
 import MenuOverlay from "./MenuOverlay";
 
 const Navbar = () => {
@@ -12,7 +12,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    setIsAuthenticated(!!token); 
+    setIsAuthenticated(!!token);
   }, []);
 
   const handleLogout = () => {
@@ -56,7 +56,7 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden menu md:block md:w-auto" id="navbar">
-          <ul className="flex text-black md:flex-wrap md:space-x-5 md:text-xl">
+          <ul className="flex items-center text-black md:flex-wrap md:space-x-5 md:text-xl">
             {!isAuthenticated ? (
               <>
                 <li
@@ -75,17 +75,15 @@ const Navbar = () => {
             ) : (
               <>
                 <li
-                  className={`px-4 py-2 text-lg transition rounded-md cursor-pointer ${
-                    isProfilePage
-                      ? "bg-primary-700 text-white"
-                      : "bg-primary-600 text-white hover:bg-primary-700"
+                  className={`cursor-pointer ${
+                    isProfilePage ? "text-primary-700" : "hover:text-primary-600"
                   }`}
                   onClick={() => navigate("/profile")}
                 >
-                  Profile
+                  <UserCircleIcon className="w-10 h-10 text-primary-600 hover:text-primary-700" />
                 </li>
                 <li
-                  className="px-4 py-2 text-lg text-white transition bg-red-600 rounded-md cursor-pointer hover:bg-red-700"
+                  className="px-4 py-2 text-lg text-white transition rounded-md cursor-pointer bg-primary-600 hover:bg-primary-700"
                   onClick={handleLogout}
                 >
                   Logout
