@@ -20,7 +20,6 @@ export const AuthorizeUser = ({ children }) => {
   }, []);
 
   if (isAuthorized === null) {
-    // Show a loading spinner or placeholder while verifying
     return <p>Loading...</p>;
   }
 
